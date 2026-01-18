@@ -1,0 +1,40 @@
+You are given an array of n integers a₁, a₂, …, aₙ. You are allowed to perform the following operation once. Select an integer x (which may be negative), and for each value i (1 ≤ i ≤ n), set aᵢ = aᵢ + x. For example, if a = [1, 3, 4, 2], and you perform the operation with x = 3, a is now equal to [4, 6, 7, 5]. Output the maximum possible value of MEX(a) after the operation is performed. MEX(a) is defined as the smallest non-negative integer that is not present in the array. For example, MEX([1, 2, 0, 5]) is 3, and MEX([1, 2, 4, 9]) is 0.
+
+Input: The first line of the input contains a single integer t (1 ≤ t ≤ 1000) — the number of test cases. The first line of each test case contains a single integer n (1 ≤ n ≤ 3000) — the length of array a. The second line contains n integers a₁, a₂, …, aₙ (−10⁹ ≤ aᵢ ≤ 10⁹) — the array a. It is guaranteed that the sum of n over all test cases does not exceed 3000.
+
+Output: For each test case, output the maximum possible value of MEX(a) after the operation has been performed.
+
+#include <bits/stdc++.h>
+
+using namespace std;
+int mex(vector < int > & a) {
+  unordered_set < int > s(a.begin(), a.end());
+  int m = 0;
+  while (s.count(m)) {
+    m++;
+  }
+  return m;
+}
+
+int main() {
+  int t;
+  cin >> t;
+  while (t--) {
+    int n;
+    cin >> n;
+    vector < int > a(n);
+    for (int i = 0; i < n; i++) {
+      cin >> a[i];
+    }
+    int maxi = INT_MIN;
+    for (int i = 0; i < n; i++) {
+      vector < int > temp = a;
+      for (int j = 0; j < n; j++) {
+        temp[j] = temp[j] - a[i];
+      }
+      int mexi = mex(temp);
+      maxi = max(mexi, maxi);
+    }
+    cout << maxi << endl;
+  }
+}
